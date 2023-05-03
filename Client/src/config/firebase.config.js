@@ -10,7 +10,7 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
-const app = getApps.length > 0 ? getApp() : initializeApp(firebase.config);
+const app = getApps.length > 0 ? getApp() : initializeApp(firebaseConfig);
 
 const storage = getStorage(app);
 
