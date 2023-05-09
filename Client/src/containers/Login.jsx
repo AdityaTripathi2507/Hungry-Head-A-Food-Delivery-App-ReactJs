@@ -16,6 +16,7 @@ import { app } from "../config/firebase.config";
 import { validateUserJWTToken } from "../api";
 import { setUserDetails } from "../context/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
+import { alertInfo, alertWarning } from "../context/actions/alertActions";
 
 const Login = () => {
   const [userEmail, setUserEmail] = useState("");
@@ -29,6 +30,7 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user);
+  const alert = useSelector((state) => state.alert);
 
   useEffect(() => {
     if (user) {
@@ -53,7 +55,7 @@ const Login = () => {
 
   const signUpWithEmailPass = async () => {
     if (userEmail === "" || password === "" || confirm_password === "") {
-      console.log("they are empty");
+      dispatch(alertInfo("Required Field should not be empty"));
     } else {
       if (password === confirm_password) {
         setUserEmail("");
@@ -76,7 +78,7 @@ const Login = () => {
           });
         });
       } else {
-        //alert message
+        dispatch(alertWarning("Password Doesn't Match"));
       }
     }
   };
@@ -98,7 +100,7 @@ const Login = () => {
         }
       );
     } else {
-      //alert message
+      dispatch(alertWarning("Password Doesn't Match"));
     }
   };
 
