@@ -7,7 +7,7 @@ const serviceAccountKey = require("./serviceAccountKey.json");
 const express = require("express");
 const app = express();
 
-//body parser for json data
+//body parser for data
 app.use(express.json());
 
 //cross origin
@@ -18,13 +18,16 @@ app.use((req, res, next) => {
   next();
 });
 
-//firebase credentials
+//firebase credential
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccountKey),
 });
 
 //api endpoints
 app.get("/", (req, res) => {
-  return res.send("Hello World");
+  return res.send("hello world");
 });
+
+const userRoute = require("./routes/user");
+app.use("/api/users", userRoute);
 exports.app = functions.https.onRequest(app);
